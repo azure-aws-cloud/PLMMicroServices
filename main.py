@@ -1,87 +1,66 @@
+import json
+
 from fastapi import FastAPI, HTTPException, Depends
 from sqlalchemy.orm import Session
+import models, schemas
+from database import SessionLocal, engine
+from models import Drawing
 
-from database import SessionLocal
-from drawingmodel import DrawingModel
-from part import Part, Drawing
-from partmodel import PartModel
-
-# from models import SessionLocal, PartModel, Part, DrawingModel, Drawing
+# create / update tables
+models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
-# Dependency to get the database session
-def get_db() -> Session:
+def get_db():
     db = SessionLocal()
     try:
         yield db
     finally:
         db.close()
-
-# Create Part
-@app.post("/parts/", response_model=PartModel)
-def create_part(part: PartModel, db: Session = Depends(get_db)):
-    db_part = Part(**part.dict())
+@app.post("/parts/", response_model=schemas.Part)
+def create_part(part: schemas.PartCreate, db: Session = Depends(get_db)):
+    db_part = models.Part(**part.dict())
     db.add(db_part)
     db.commit()
     db.refresh(db_part)
     return db_part
 
-# Update Part
-@app.put("/parts/{part_id}", response_model=PartModel)
-def update_part(part_id: int, part: PartModel, db: Session = Depends(get_db)):
-    db_part = db.query(Part).filter(Part.part_id == part_id).first()
-    if not db_part:
-        raise HTTPException(status_code=404, detail="Part not found")
-
-    for key, value in part.dict(exclude_unset=True).items():
-        setattr(db_part, key, value)
-
-    db.commit()
-    db.refresh(db_part)
+@app.get("/parts/{part_id}", response_model=schemas.Drawing)
+def read_part(part_id: int, db: Session = Depends(get_db)):
+    db_part = db.query(models.Part).filter(models.Part.id == part_id).first()
+    if db_part is None:
+        raise HTTPException(status_code=404, detail="Drawing not found")
     return db_part
+@app.post("/drawings/", response_model=schemas.Drawing)
+def create_drawing(drawing: schemas.DrawingCreate, db: Session = Depends(get_db)):
+    # dwg_dict = drawing.model_dump()
+    # dwg_json_pretty = json.dumps(dwg_dict, indent=2)
+    # print(dwg_json_pretty)
 
-# Delete Part
-@app.delete("/parts/{part_id}", response_model=dict)
-def delete_part(part_id: int, db: Session = Depends(get_db)):
-    db_part = db.query(Part).filter(Part.part_id == part_id).first()
-    if not db_part:
-        raise HTTPException(status_code=404, detail="Part not found")
-
-    db.delete(db_part)
-    db.commit()
-    return {"detail": "Part deleted successfully"}
-
-# Create Drawing
-@app.post("/drawings/", response_model=DrawingModel)
-def create_drawing(drawing: DrawingModel, db: Session = Depends(get_db)):
-    db_drawing = Drawing(**drawing.dict())
+    # Drawing needs Parts, so create drawing and add parts to the drawing
+    db_drawing:Drawing = models.Drawing(name=drawing.name)
     db.add(db_drawing)
     db.commit()
     db.refresh(db_drawing)
-    return db_drawing
 
-# Update Drawing
-@app.put("/drawings/{drawing_id}", response_model=DrawingModel)
-def update_drawing(drawing_id: int, drawing: DrawingModel, db: Session = Depends(get_db)):
-    db_drawing = db.query(Drawing).filter(Drawing.drawing_id == drawing_id).first()
-    if not db_drawing:
-        raise HTTPException(status_code=404, detail="Drawing not found")
+    for part_id in drawing.parts:
+        db_part: models.Part = db.query(models.Part).filter(models.Part.id == part_id).first()
+        # print(db_part)
+        db_part.drawing_id = db_drawing.id
+        db.add(db_part)
 
-    for key, value in drawing.dict(exclude_unset=True).items():
-        setattr(db_drawing, key, value)
-
+    db.add(db_drawing)
     db.commit()
     db.refresh(db_drawing)
+
+
+
     return db_drawing
 
-# Delete Drawing
-@app.delete("/drawings/{drawing_id}", response_model=dict)
-def delete_drawing(drawing_id: int, db: Session = Depends(get_db)):
-    db_drawing = db.query(Drawing).filter(Drawing.drawing_id == drawing_id).first()
-    if not db_drawing:
+@app.get("/drawings/{drawing_id}", response_model=schemas.Drawing)
+def read_drawing(drawing_id: int, db: Session = Depends(get_db)):
+    db_drawing = db.query(models.Drawing).filter(models.Drawing.id == drawing_id).first()
+    if db_drawing is None:
         raise HTTPException(status_code=404, detail="Drawing not found")
+    return db_drawing
 
-    db.delete(db_drawing)
-    db.commit()
-    return {"detail": "Drawing deleted successfully"}
