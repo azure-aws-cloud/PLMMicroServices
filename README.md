@@ -8,9 +8,34 @@ Pydantic
 SQLAlchemy
 ```
 
-# Use case 1: Manage Parts
+# Setup 
+OS - Mac 10.15 Sequoia, Docker Desktop , Minikube and PostgreSQL DB 14
 
-# Use case 2: Manage Drawings
+# Database changes
+## Add the following line to the pg_hba.conf
+```
+host    all             all             0.0.0.0/0               trust
+```
 
-# Use case 3: Manage Engg Change Requests
+## Add the following line to the postgresql.conf
+```
+listen_addresses = '*'
+port = 5432
+```
+
+# Kubernetes networking on Mac OS (IP address may change based on your network)
+## Add the following line to the /etc/hosts
+```
+192.168.64.1    host.minikube.internal
+```
+
+# Use case 1: Create Parts
+
+# Use case 2: Create Drawings
+
+# Use case 3: Containerize the app using Docker
+
+# Use case 4: Orchestrate the app using Kubernetes
+
+# Use case 5: Deploy the app on Kubernetes
 
