@@ -15,7 +15,7 @@ spec:
       containers:
       - name: web-app
         image: plm-microservices-app:latest
-        imagePullPolicy: Always
+        imagePullPolicy: Never
         ports:
         - containerPort: 80
         env:
