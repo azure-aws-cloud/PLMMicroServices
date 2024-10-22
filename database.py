@@ -4,7 +4,11 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
+# for docker use
 # SQLALCHEMY_DATABASE_URL = "postgresql://postgres:123@host.docker.internal:5432/postgres"
+
+# for local use
+# SQLALCHEMY_DATABASE_URL = "postgresql://postgres:123@localhost:5432/postgres"
 
 db_user = os.getenv('DB_USERNAME')
 if db_user is None:
@@ -26,6 +30,7 @@ db_schema = os.getenv('DB_SCHEMA')
 if db_schema is None:
     db_schema = 'plm'
 
+# for use with Kubernetes use this url
 SQLALCHEMY_DATABASE_URL = f"postgresql://{db_user}:{db_pass}@{db_host}:{db_port}/{db_schema}"
 # Use your database URL here
 print("DB URL",SQLALCHEMY_DATABASE_URL)
