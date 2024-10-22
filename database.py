@@ -4,11 +4,11 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-# SQLALCHEMY_DATABASE_URL = "postgresql://postgres:123@host.docker.internal/postgres"
+# SQLALCHEMY_DATABASE_URL = "postgresql://postgres:123@host.docker.internal:5432/postgres"
 
 db_user = os.getenv('DB_USERNAME')
 if db_user is None:
-    db_user = 'postgres'
+    db_user = 'rhushi'
 
 db_pass = os.getenv('DB_PASSWORD')
 if db_pass is None:
@@ -26,8 +26,11 @@ db_schema = os.getenv('DB_SCHEMA')
 if db_schema is None:
     db_schema = 'plm'
 
-SQLALCHEMY_DATABASE_URL = f"postgresql://{db_user}:{db_pass}@{db_host}/{db_schema}"
-  # Use your database URL here
+SQLALCHEMY_DATABASE_URL = f"postgresql://{db_user}:{db_pass}@{db_host}:{db_port}/{db_schema}"
+# Use your database URL here
+print("DB URL",SQLALCHEMY_DATABASE_URL)
+
+#SQLALCHEMY_DATABASE_URL = "postgresql://rhushi:123@host.docker.internal/postgres"
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)

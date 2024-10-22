@@ -3,10 +3,10 @@ kind: Service
 metadata:
   name: web-app-service
 spec:
+  type: NodePort
   selector:
     app: web-app
   ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 80
-  type: NodePort
+    - port: 80
+      nodePort: 31000
+      targetPort: 8000 # this port is running the fastapi on port as specified in the Dockerfile

@@ -12,6 +12,7 @@ spec:
       labels:
         app: web-app
     spec:
+      
       containers:
       - name: web-app
         image: plm-microservices-app:latest
