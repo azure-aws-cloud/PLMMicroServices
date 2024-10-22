@@ -3,5 +3,5 @@ kind: ConfigMap
 metadata:
   name: db-config
 data:
-  DB_HOST: "localhost"
+  DB_HOST: "host.minikube.internal"
   DB_PORT: "5432" # Default PostgreSQL port
