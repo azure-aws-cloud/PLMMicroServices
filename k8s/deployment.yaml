@@ -16,7 +16,7 @@ spec:
       containers:
       - name: web-app
         image: plm-microservices-app:latest
-        imagePullPolicy: Never
+        imagePullPolicy: Never # this can be changed to IfNotPresent 
         ports:
         - containerPort: 80
         env:

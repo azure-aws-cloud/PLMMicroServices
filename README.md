@@ -16,6 +16,10 @@ OS - Mac 10.15 Sequoia, Docker Desktop , Minikube and PostgreSQL DB 14
 ```
 host    all             all             0.0.0.0/0               trust
 ```
+## Create schema plm
+```
+CREATE SCHEMA plm;
+```
 
 ## Add the following line to the postgresql.conf
 ```
@@ -27,6 +31,14 @@ port = 5432
 ## Add the following line to the /etc/hosts
 ```
 192.168.64.1    host.minikube.internal
+
+```
+
+# Start minikube on Mac
+## Commands
+```
+minikube start --driver=hyperkit
+eval $(minikube docker-env)
 ```
 
 # Create container image using docker
