@@ -29,6 +29,36 @@ port = 5432
 192.168.64.1    host.minikube.internal
 ```
 
+# Create container image using docker
+## Build the docker image without cache
+```
+docker build --no-cache -t plm-microservices-app:latest .
+```
+
+# Deploy K8s file using the commands below
+```
+ kubectl create namespace plm
+ kubectl apply -f configmap.yaml -n plm
+ kubectl apply -f secret.yaml -n plm
+ kubectl apply -f deployment.yaml -n plm
+ kubectl apply -f service.yaml -n plm
+```
+# Generate the service url using the command below
+```
+minikube service web-app-service -n plm
+```
+```
+|-----------|-----------------|-------------|---------------------------|
+| NAMESPACE |      NAME       | TARGET PORT |            URL            |
+|-----------|-----------------|-------------|---------------------------|
+| plm       | web-app-service |          80 | http://192.168.64.2:31000 |
+|-----------|-----------------|-------------|---------------------------| 
+```
+
+# Running the application - REST API using Swagger
+```
+Hit the url - http://192.168.64.2:31000/docs
+```
 # Use case 1: Create Parts
 
 # Use case 2: Create Drawings
