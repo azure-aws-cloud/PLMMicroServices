@@ -73,11 +73,27 @@ Hit the url - http://192.168.64.2:31000/docs
 ```
 # Use case 1: Create Parts
 
+REST API - /parts/
+## Create Axle (Part)
+![img.png](img.png)
+
+## Create Wheel (Part)
+![img_5.png](img_5.png)
+
+
 # Use case 2: Create Drawings
 
+## Create Drawing (Connect the Axle and Wheel to the Drawing)
+![img_6.png](img_6.png)
+
+
 # Use case 3: Containerize the app using Docker
+Pods running in the minikube
+![img_7.png](img_7.png)
 
 # Use case 4: Orchestrate the app using Kubernetes
+![img_8.png](img_8.png)
+
 
 # Use case 5: Deploy the app on Kubernetes
-
+![img_9.png](img_9.png)
