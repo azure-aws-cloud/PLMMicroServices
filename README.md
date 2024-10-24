@@ -42,7 +42,6 @@ minikube_ip     macbook.local
 minikube start --driver=hyperkit
 eval $(minikube docker-env)
 minikube addons enable ingress
-
 ```
 
 # Create container image using docker
@@ -54,6 +53,7 @@ docker build --no-cache -t plm-microservices-app:latest .
 # Deploy K8s file using the commands below
 ```
  kubectl create namespace plm
+ kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.6.1/cert-manager.yaml
  kubectl apply -f configmap.yaml -n plm
  kubectl apply -f secret.yaml -n plm
  kubectl apply -f deployment.yaml -n plm
