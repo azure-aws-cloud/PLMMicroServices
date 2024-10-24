@@ -41,6 +41,8 @@ minikube_ip     macbook.local
 ```
 minikube start --driver=hyperkit
 eval $(minikube docker-env)
+minikube addons enable ingress
+
 ```
 
 # Create container image using docker
