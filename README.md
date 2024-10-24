@@ -29,8 +29,10 @@ port = 5432
 
 # Kubernetes networking on Mac OS (IP address may change based on your network)
 ## Add the following line to the /etc/hosts
+## replace the minikube_ip using the command minikube ip
 ```
 192.168.64.1    host.minikube.internal
+minikube_ip     macbook.local
 
 ```
 
