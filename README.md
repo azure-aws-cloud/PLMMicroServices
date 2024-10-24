@@ -73,7 +73,8 @@ minikube service web-app-service -n plm
 
 # Running the application - REST API using Swagger
 ```
-Hit the url - http://192.168.64.2:31000/docs
+Hit the url - https://192.168.64.2:31000/docs ( if ingress is not configured )
+URL - https://macbook.local/docs ( if ingress is configured, USE THIS)
 ```
 # Use case 1: Create Parts
 
