@@ -54,6 +54,10 @@ docker build --no-cache -t plm-microservices-app:latest .
  kubectl apply -f secret.yaml -n plm
  kubectl apply -f deployment.yaml -n plm
  kubectl apply -f service.yaml -n plm
+ kubectl apply -f clusterissuer.yaml -n plm
+ kubectl apply -f certificate.yaml -n plm
+ kubectl apply -f ingress.yaml -n plm
+
 ```
 # Generate the service url using the command below
 ```
