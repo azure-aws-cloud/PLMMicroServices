@@ -1,6 +1,9 @@
 import json
 
 from fastapi import FastAPI, HTTPException, Depends
+from contextlib import asynccontextmanager
+from apscheduler.schedulers.background import BackgroundScheduler
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 import models, schemas
 from database import SessionLocal, engine
@@ -9,7 +12,25 @@ from models import Drawing
 # create / update tables
 models.Base.metadata.create_all(bind=engine)
 
-app = FastAPI()
+def job():
+    print("==I am training data every saturday at 6 AM Europe CET")
+
+
+@asynccontextmanager
+async def lifespan(app:FastAPI):
+    scheduler = BackgroundScheduler(timezone="Europe/Berlin")
+    scheduler.add_job(job, 'cron', day_of_week='sat', hour=6, minute=0)
+    scheduler.start()
+    yield
+app = FastAPI(lifespan=lifespan)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 def get_db():
     db = SessionLocal()
