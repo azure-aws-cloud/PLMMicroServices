@@ -40,6 +40,7 @@ minikube_ip     macbook.local
 ## Commands
 ```
 minikube start --driver=hyperkit
+minikube -p minikube docker-env                                                                                      ─╯
 eval $(minikube docker-env)
 minikube addons enable ingress
 ```
