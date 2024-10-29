@@ -26,7 +26,10 @@ CREATE SCHEMA plm;
 listen_addresses = '*'
 port = 5432
 ```
-
+## Check database connection (postgres) from pod
+```
+nc -vz localhost 5432
+```
 # Kubernetes networking on Mac OS (IP address may change based on your network)
 ## Add the following line to the /etc/hosts
 ## replace the minikube_ip using the command minikube ip
