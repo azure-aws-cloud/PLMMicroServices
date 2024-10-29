@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y \
     libpq-dev \
     && rm -rf /var/lib/apt/lists/*
 
-RUN apt-get install -y iputils-ping netcat-openbsd
+RUN apt-get update && apt-get install -y iputils-ping netcat-openbsd
 
 
 # Install Python dependencies
