@@ -65,7 +65,12 @@ docker build --no-cache -t plm-microservices-app:latest .
  kubectl apply -f clusterissuer.yaml -n plm
  kubectl apply -f certificate.yaml -n plm
  kubectl apply -f ingress.yaml -n plm
+ kubectcl apply -f test-pod.yaml -n plm
 
+```
+# Test POD - Debugging (Optional)
+```
+kubectl exec -it test-pod -n plm -- sh
 ```
 # Generate the service url using the command below
 ```
