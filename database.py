@@ -28,7 +28,7 @@ if db_port is None:
 
 db_schema = os.getenv('DB_SCHEMA')
 if db_schema is None:
-    db_schema = 'plm'
+    db_schema = 'postgres'
 
 # for use with Kubernetes use this url
 SQLALCHEMY_DATABASE_URL = f"postgresql://{db_user}:{db_pass}@{db_host}:{db_port}/{db_schema}"

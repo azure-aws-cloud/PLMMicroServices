@@ -18,17 +18,17 @@ spec:
         image: plm-microservices-app:latest
         imagePullPolicy: Never # this can be changed to IfNotPresent 
         ports:
-        - containerPort: 80
+        - containerPort: 8000
         livenessProbe:
           httpGet:
             path: /healthz
-            port: 80
+            port: 8000
           initialDelaySeconds: 15
           periodSeconds: 10
         readinessProbe:
           httpGet:
             path: /readyz
-            port: 80
+            port: 8000
           initialDelaySeconds: 30
           periodSeconds: 20
           failureThreshold: 3
