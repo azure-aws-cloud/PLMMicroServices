@@ -19,6 +19,18 @@ spec:
         imagePullPolicy: Never # this can be changed to IfNotPresent 
         ports:
         - containerPort: 80
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 80
+          initialDelaySeconds: 3
+          periodSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /readyz
+            port: 80
+          initialDelaySeconds: 3
+          periodSeconds: 3
         env:
         - name: DB_HOST
           valueFrom:

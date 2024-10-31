@@ -8,6 +8,11 @@ from sqlalchemy.orm import Session
 import models, schemas
 from database import SessionLocal, engine
 from models import Drawing
+from fastapi.responses import JSONResponse
+
+import psycopg2
+from psycopg2 import OperationalError
+
 
 # create / update tables
 models.Base.metadata.create_all(bind=engine)
@@ -31,7 +36,13 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
+DATABASE_CONFIG = {
+    "host": "host.minikube.internal",
+    "database": "postgres",
+    "user": "rhushi",
+    "password": "123",
+    "port": "5432"
+}
 def get_db():
     db = SessionLocal()
     try:
@@ -85,3 +96,21 @@ def read_drawing(drawing_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Drawing not found")
     return db_drawing
 
+@app.get("/healthz")
+async def liveness_check():
+    # This is a simple liveness check endpoint
+    return JSONResponse(status_code=200, content={"status": "alive"})
+
+@app.get("/readyz")
+async def readiness_check():
+    # Readiness check to see if the database is up and running
+    try:
+        connection = psycopg2.connect(**DATABASE_CONFIG)
+        cursor = connection.cursor()
+        cursor.execute("SELECT 1")
+        cursor.fetchone()
+        cursor.close()
+        connection.close()
+        return JSONResponse(status_code=200, content={"status": "ready"})
+    except OperationalError:
+        return JSONResponse(status_code=500, content={"status": "database not ready"})
