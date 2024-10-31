@@ -1,4 +1,5 @@
 import json
+import os
 
 from fastapi import FastAPI, HTTPException, Depends
 from contextlib import asynccontextmanager
@@ -36,12 +37,33 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+db_user = os.getenv('DB_USERNAME')
+if db_user is None:
+    db_user = 'rhushi'
+
+db_pass = os.getenv('DB_PASSWORD')
+if db_pass is None:
+    db_pass = 123
+
+db_host = os.getenv('DB_HOST')
+if db_host is None:
+    db_host = 'localhost'
+
+db_port = os.getenv('DB_PORT')
+if db_port is None:
+    db_port = 5432
+
+db_schema = os.getenv('DB_SCHEMA')
+if db_schema is None:
+    db_schema = 'plm'
+
+
 DATABASE_CONFIG = {
-    "host": "host.minikube.internal",
-    "database": "postgres",
-    "user": "rhushi",
-    "password": "123",
-    "port": "5432"
+    "host": f"{db_host}",
+    "database": f"{db_schema}",
+    "user": f"{db_user}",
+    "password": f"{db_pass}",
+    "port": f"{db_port}",
 }
 def get_db():
     db = SessionLocal()
