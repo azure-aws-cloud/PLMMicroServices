@@ -31,7 +31,7 @@ port = 5432
 nc -vz localhost 5432
 ```
 # Kubernetes networking on Mac OS (IP address may change based on your network)
-## Add the following line to the /etc/hosts
+## Add the following line to the /etc/hosts (host.minikube.internal points to the ip address on your local mac)
 ## replace the minikube_ip using the command minikube ip
 ```
 192.168.64.1    host.minikube.internal
@@ -42,7 +42,7 @@ minikube_ip     macbook.local
 # Start minikube on Mac
 ## Commands
 ```
-minikube start --driver=hyperkit
+minikube start --driver=docker
 minikube -p minikube docker-env                                                                                      ─╯
 eval $(minikube docker-env)
 minikube addons enable ingress
@@ -73,6 +73,7 @@ docker build --no-cache -t plm-microservices-app:latest .
 kubectl exec -it test-pod -n plm -- sh
 ```
 # Generate the service url using the command below
+## Accessible url in mac is http://127.0.0.1:49922
 ```
 minikube service web-app-service -n plm
 ```
@@ -80,14 +81,20 @@ minikube service web-app-service -n plm
 |-----------|-----------------|-------------|---------------------------|
 | NAMESPACE |      NAME       | TARGET PORT |            URL            |
 |-----------|-----------------|-------------|---------------------------|
-| plm       | web-app-service |          80 | http://192.168.64.2:31000 |
-|-----------|-----------------|-------------|---------------------------| 
+| plm       | web-app-service |          80 | http://192.168.49.2:31000 |
+|-----------|-----------------|-------------|---------------------------|
+🏃  Starting tunnel for service web-app-service.
+|-----------|-----------------|-------------|------------------------|
+| NAMESPACE |      NAME       | TARGET PORT |          URL           |
+|-----------|-----------------|-------------|------------------------|
+| plm       | web-app-service |             | http://127.0.0.1:49922 |
+|-----------|-----------------|-------------|------------------------|
 ```
 
 # Running the application - REST API using Swagger
 ```
-Hit the url - https://192.168.64.2:31000/docs ( if ingress is not configured )
-URL - https://macbook.local/docs ( if ingress is configured, USE THIS)
+Hit the url - https://192.168.64.2:31000/docs ( if ingress is not configured , works on linux/ubuntu)
+URL - https://macbook.local/docs ( if ingress is configured, USE THIS, works on linux/ubuntu)
 ```
 # Use case 1: Create Parts
 
