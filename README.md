@@ -32,8 +32,12 @@ nc -vz localhost 5432
 ```
 # Kubernetes networking on Mac OS (IP address may change based on your network)
  Add the following line to the /etc/hosts (host.minikube.internal points to the ip address on your local mac)
+ 
  This can be obtained from mac by running command ifconfig and then getting the ip for bridge100, this ip is the host.minikube.internal
- replace the minikube_ip using the command minikube ip
+ 
+ Replace the minikube_ip using the command minikube ip
+
+ As a side note Docker desktop is not running on mac 
 ```
 192.168.64.1    host.minikube.internal
 minikube_ip     macbook.local
