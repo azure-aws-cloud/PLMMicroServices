@@ -57,7 +57,7 @@ docker build --no-cache -t plm-microservices-app:latest .
 
 # Deploy K8s file using the commands below
 ```
- kubectl create namespace plm
+ kubectl apply -f namespace.yaml
  kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.6.1/cert-manager.yaml
  kubectl apply -f configmap.yaml -n plm
  kubectl apply -f secret.yaml -n plm
@@ -74,7 +74,7 @@ docker build --no-cache -t plm-microservices-app:latest .
 kubectl exec -it test-pod -n plm -- sh
 ```
 # Generate the service url using the command below
-## Accessible url in mac is http://127.0.0.1:49922
+
 ```
 minikube service web-app-service -n plm
 ```
