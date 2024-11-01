@@ -74,7 +74,7 @@ docker build --no-cache -t plm-microservices-app:latest .
 kubectl exec -it test-pod -n plm -- sh
 ```
 # Generate the service url using the command below
-## Accessible url in mac is http://127.0.0.1:49922
+
 ```
 minikube service web-app-service -n plm
 ```
