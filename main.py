@@ -55,7 +55,7 @@ if db_port is None:
 
 db_schema = os.getenv('DB_SCHEMA')
 if db_schema is None:
-    db_schema = 'plm'
+    db_schema = 'postgres'
 
 
 DATABASE_CONFIG = {
