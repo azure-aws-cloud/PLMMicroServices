@@ -5,7 +5,7 @@ metadata:
 spec:
   tls:
   - hosts:
-    - mackbook.local
+    - macbook.local
     secretName: nginx-tls
   rules:
   - host: macbook.local
