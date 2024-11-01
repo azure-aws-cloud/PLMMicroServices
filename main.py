@@ -126,6 +126,11 @@ async def liveness_check():
     # This is a simple liveness check endpoint
     return JSONResponse(status_code=200, content={"status": "alive"})
 
+@app.get("/")
+async def main():
+    # This is a simple liveness check endpoint
+    return JSONResponse(status_code=200, content={"message": "Welcome to PLM Microservice in Python !!!"})
+
 @app.get("/readyz")
 async def readiness_check():
     # Readiness check to see if the database is up and running
