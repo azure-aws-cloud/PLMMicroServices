@@ -48,6 +48,9 @@ if db_pass is None:
 db_host = os.getenv('DB_HOST')
 if db_host is None:
     db_host = 'localhost'
+    # on win wsl , use the command to get ip
+    # ip addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}'
+    # use this ip in db_host and in the database explorer to connect to postgres
 
 db_port = os.getenv('DB_PORT')
 if db_port is None:
