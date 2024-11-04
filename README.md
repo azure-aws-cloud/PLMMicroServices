@@ -58,6 +58,11 @@ minikube addons enable ingress
 ```
 docker build --no-cache -t plm-microservices-app:latest .
 ```
+## Run the docker container on Ubuntu with the flag --net=host, so no need to use host.docker.internal on ubuntu only
+``` 
+docker run --net=host -p 8000:8000 plm-microservices-app:latest
+
+```
 
 # Deploy K8s file using the commands below
 ```
