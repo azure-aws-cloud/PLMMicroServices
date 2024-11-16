@@ -32,6 +32,8 @@ nc -vz localhost 5432
 ```
 # Kubernetes networking on Mac OS (IP address may change based on your network)
  Add the following line to the /etc/hosts (host.minikube.internal points to the ip address on your local mac)
+
+ For Windows/WSL2 host.minikube.internal is the bridge ip address when ifconfig is executed from WSL2, refer the example below.
  
  This can be obtained from mac by running command ifconfig and then getting the ip for bridge100, this ip is the host.minikube.internal
  
@@ -47,11 +49,13 @@ minikube_ip     macbook.local
 # WSL2 on Windows configuration settings
 ## Run the ifconfig command to get the ip address for the bridge network adpater 
 
-Sample command output should be as below, please note the bridge IP 192.168.49.1, this IP is hosting the applications, databases, any other running on WSL2
+Sample command output should be as below, please note the bridge IP 192.168.49.1(host.minikube.internal), this IP is hosting the applications, databases, any other running on WSL2
 
 ## WSL2 expooses eth0 address to connect it from Windows OS like a database postgres running in WSL2 and use the eth0 address and port 5432 to connect from Windows OS (PgAdmin4)
-❯ ifconfig
-br-f8db590b89d5: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
+ifconfig
+
+br-f8db590b89d5: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500  (host.minikube.internal ip address is 192.168.49.1)
+
         inet 192.168.49.1  netmask 255.255.255.0  broadcast 192.168.49.255
         ether 02:42:71:ba:26:6d  txqueuelen 0  (Ethernet)
         RX packets 0  bytes 0 (0.0 B)
@@ -60,6 +64,7 @@ br-f8db590b89d5: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
         TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
 
 docker0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
+
         inet 172.17.0.1  netmask 255.255.0.0  broadcast 172.17.255.255
         ether 02:42:90:6b:ef:45  txqueuelen 0  (Ethernet)
         RX packets 0  bytes 0 (0.0 B)
@@ -68,6 +73,7 @@ docker0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
         TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
 
 eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+
         inet 172.25.127.242  netmask 255.255.240.0  broadcast 172.25.127.255
         inet6 fe80::215:5dff:fece:be86  prefixlen 64  scopeid 0x20<link>
         ether 00:15:5d:ce:be:86  txqueuelen 1000  (Ethernet)
@@ -77,6 +83,7 @@ eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
         TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
 
 lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+
         inet 127.0.0.1  netmask 255.0.0.0
         inet6 ::1  prefixlen 128  scopeid 0x10<host>
         loop  txqueuelen 1000  (Local Loopback)
@@ -86,6 +93,7 @@ lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
         TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
 
 virbr0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
+
         inet 192.168.122.1  netmask 255.255.255.0  broadcast 192.168.122.255
         ether 52:54:00:2d:55:74  txqueuelen 1000  (Ethernet)
         RX packets 0  bytes 0 (0.0 B)
@@ -104,6 +112,7 @@ minikube start --driver=hyperkit
 minikube -p minikube docker-env                                                                                      ─╯
 eval $(minikube docker-env)
 minikube addons enable ingress
+minikube ip
 ```
 
 # Start minikube on Ubuntu
@@ -113,6 +122,16 @@ minikube start --driver=docker
 minikube -p minikube docker-env                                                                                      ─╯
 eval $(minikube docker-env)
 minikube addons enable ingress
+minikube ip
+```
+
+# Start minikube on WSL2/Windows
+```
+minikube start --driver=docker
+minikube -p minikube docker-env                                                                                      ─╯
+eval $(minikube docker-env)
+minikube addons enable ingress
+minikube ip
 ```
 
 # Create container image using docker
