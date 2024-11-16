@@ -44,6 +44,59 @@ minikube_ip     macbook.local
 
 ```
 
+# WSL2 on Windows configuration settings
+## Run the ifconfig command to get the ip address for the bridge network adpater 
+
+Sample command output should be as below, please note the bridge IP 192.168.49.1, this IP is hosting the applications, databases, any other running on WSL2
+
+## WSL2 expooses eth0 address to connect it from Windows OS like a database postgres running in WSL2 and use the eth0 address and port 5432 to connect from Windows OS (PgAdmin4)
+❯ ifconfig
+br-f8db590b89d5: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
+        inet 192.168.49.1  netmask 255.255.255.0  broadcast 192.168.49.255
+        ether 02:42:71:ba:26:6d  txqueuelen 0  (Ethernet)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+docker0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
+        inet 172.17.0.1  netmask 255.255.0.0  broadcast 172.17.255.255
+        ether 02:42:90:6b:ef:45  txqueuelen 0  (Ethernet)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 172.25.127.242  netmask 255.255.240.0  broadcast 172.25.127.255
+        inet6 fe80::215:5dff:fece:be86  prefixlen 64  scopeid 0x20<link>
+        ether 00:15:5d:ce:be:86  txqueuelen 1000  (Ethernet)
+        RX packets 6  bytes 837 (837.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 17  bytes 1248 (1.2 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 25  bytes 7705 (7.7 KB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 25  bytes 7705 (7.7 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+virbr0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
+        inet 192.168.122.1  netmask 255.255.255.0  broadcast 192.168.122.255
+        ether 52:54:00:2d:55:74  txqueuelen 1000  (Ethernet)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+```
+ifconfig
+
+```
+
 # Start minikube on Mac
 ## Commands
 ```
