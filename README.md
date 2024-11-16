@@ -53,6 +53,15 @@ eval $(minikube docker-env)
 minikube addons enable ingress
 ```
 
+# Start minikube on Ubuntu
+## Commands
+```
+minikube start --driver=docker
+minikube -p minikube docker-env                                                                                      ─╯
+eval $(minikube docker-env)
+minikube addons enable ingress
+```
+
 # Create container image using docker
 ## Build the docker image without cache
 ```
