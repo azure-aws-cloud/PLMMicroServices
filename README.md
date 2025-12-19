@@ -54,6 +54,8 @@ Sample command output should be as below, please note the bridge IP 192.168.49.1
 ## WSL2 expooses eth0 address to connect it from Windows OS like a database postgres running in WSL2 and use the eth0 address and port 5432 to connect from Windows OS (PgAdmin4)
 ifconfig
 
+## WSL2 change the ip address in the configmap to the eth0 ip address 172.25.127.242 (host.minikube.internal, does not work on WSL2)
+
 br-f8db590b89d5: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500  (host.minikube.internal ip address is 192.168.49.1)
 
         inet 192.168.49.1  netmask 255.255.255.0  broadcast 192.168.49.255
